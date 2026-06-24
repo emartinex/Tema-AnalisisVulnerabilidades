@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Metadatos y configuración base de la SPA educativa -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Semana 6 - Análisis de Vulnerabilidades | Hacking Ético">
+    <title>Semana 6 – Análisis de Vulnerabilidades | Hacking Ético</title>
+
+    <!-- Font Awesome para iconografía de ciberseguridad -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Hoja de estilos principal -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ============================================================
+         BARRA SUPERIOR – Logo y controles globales
+         ============================================================ -->
+    <header class="top-bar" id="topBar">
+        <div class="top-bar__left">
+            <button class="sidebar-toggle" id="sidebarToggle" aria-label="Alternar menú lateral">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <i class="fas fa-shield-halved"></i>
+                <div class="logo__text">
+                    <span class="logo__course">Hacking Ético</span>
+                    <span class="logo__topic">Análisis de Vulnerabilidades</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buscador interno de contenido -->
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="search" id="searchInput" placeholder="Buscar en el contenido..." aria-label="Buscar contenido">
+            <div class="search-results" id="searchResults" hidden></div>
+        </div>
+
+        <div class="top-bar__right">
+            <div class="progress-indicator">
+                <span id="progressText">Progreso: 0%</span>
+                <div class="progress-bar">
+                    <div class="progress-bar__fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+         CONTENEDOR PRINCIPAL – Sidebar + Contenido
+         ============================================================ -->
+    <div class="app-container">
+        <!-- Barra lateral de navegación colapsable -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar__nav" aria-label="Navegación del curso">
+                <p class="sidebar__label">Contenido del curso</p>
+                <ul class="nav-list" id="navList">
+                    <li><a href="#inicio" class="nav-link active" data-tab="inicio"><i class="fas fa-home"></i><span>Inicio</span></a></li>
+                    <li><a href="#introduccion" class="nav-link" data-tab="introduccion"><i class="fas fa-book-open"></i><span>Introducción</span></a></li>
+                    <li><a href="#cve" class="nav-link" data-tab="cve"><i class="fas fa-bug"></i><span>CVE</span></a></li>
+                    <li><a href="#cvss" class="nav-link" data-tab="cvss"><i class="fas fa-chart-line"></i><span>CVSS</span></a></li>
+                    <li><a href="#exploitdb" class="nav-link" data-tab="exploitdb"><i class="fas fa-database"></i><span>ExploitDB</span></a></li>
+                    <li><a href="#scanning" class="nav-link" data-tab="scanning"><i class="fas fa-radar"></i><span>Vulnerability Scanning</span></a></li>
+                    <li><a href="#openvas" class="nav-link" data-tab="openvas"><i class="fas fa-server"></i><span>OpenVAS</span></a></li>
+                    <li><a href="#nessus" class="nav-link" data-tab="nessus"><i class="fas fa-microscope"></i><span>Nessus</span></a></li>
+                    <li><a href="#nikto" class="nav-link" data-tab="nikto"><i class="fas fa-globe"></i><span>Nikto</span></a></li>
+                    <li><a href="#laboratorio" class="nav-link" data-tab="laboratorio"><i class="fas fa-flask"></i><span>Laboratorio</span></a></li>
+                    <li><a href="#matriz" class="nav-link" data-tab="matriz"><i class="fas fa-table"></i><span>Matriz de Vulnerabilidades</span></a></li>
+                    <li><a href="#evaluacion" class="nav-link" data-tab="evaluacion"><i class="fas fa-clipboard-check"></i><span>Evaluación</span></a></li>
+                    <li><a href="#creditos" class="nav-link" data-tab="creditos"><i class="fas fa-user"></i><span>Créditos</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Área de contenido principal con pestañas -->
+        <main class="main-content" id="mainContent">
+
+            <!-- ==================== PESTAÑA: INICIO ==================== -->
+            <section class="tab-panel active" id="inicio" data-tab="inicio">
+                <div class="hero">
+                    <div class="hero__badge"><i class="fas fa-lock"></i> Semana 6</div>
+                    <h1>Análisis de Vulnerabilidades</h1>
+                    <p class="hero__subtitle">Curso: <strong>Hacking Ético</strong></p>
+                    <p class="hero__program">Ingeniería en Redes Inteligentes y Ciberseguridad</p>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card card--highlight">
+                        <div class="card__icon card__icon--blue"><i class="fas fa-bullseye"></i></div>
+                        <h3>Objetivos de aprendizaje</h3>
+                        <ul class="check-list">
+                            <li><i class="fas fa-check-circle"></i> Comprender el concepto de vulnerabilidad y su ciclo de gestión</li>
+                            <li><i class="fas fa-check-circle"></i> Identificar y consultar CVEs en bases de datos oficiales</li>
+                            <li><i class="fas fa-check-circle"></i> Interpretar puntajes CVSS y clasificar riesgos</li>
+                            <li><i class="fas fa-check-circle"></i> Relacionar vulnerabilidades con exploits en ExploitDB</li>
+                            <li><i class="fas fa-check-circle"></i> Utilizar herramientas de escaneo: OpenVAS, Nessus y Nikto</li>
+                            <li><i class="fas fa-check-circle"></i> Elaborar matrices de vulnerabilidades y realizar evaluaciones</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__icon card__icon--green"><i class="fas fa-clock"></i></div>
+                        <h3>Tiempo estimado de estudio</h3>
+                        <div class="time-block">
+                            <span class="time-block__value">4 – 6</span>
+                            <span class="time-block__unit">horas</span>
+                        </div>
+                        <p>Incluye lectura, ejercicios prácticos, laboratorio y evaluación final.</p>
+                    </div>
+
+                    <div class="card">
+                        <div class="card__icon card__icon--red"><i class="fas fa-list-ol"></i></div>
+                        <h3>Módulos del tema</h3>
+                        <ol class="module-list">
+                            <li>Fundamentos de vulnerabilidades</li>
+                            <li>CVE y CVSS</li>
+                            <li>ExploitDB</li>
+                            <li>Herramientas de escaneo</li>
+                            <li>Laboratorio práctico</li>
+                            <li>Matriz y evaluación</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="cta-banner">
+                    <i class="fas fa-play-circle"></i>
+                    <p>Comienza explorando la <strong>Introducción</strong> desde el menú lateral o continúa donde lo dejaste.</p>
+                    <button class="btn btn--primary" data-goto="introduccion">Empezar ahora</button>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA: CRÉDITOS ==================== -->
+            <section class="tab-panel" id="creditos" data-tab="creditos">
+                <header class="section-header">
+                    <h2><i class="fas fa-user"></i> Créditos</h2>
+                    <p>Datos del creador y redes sociales</p>
+                </header>
+
+                <div class="card">
+                    <div class="creator-card" role="region" aria-labelledby="creatorName">
+                        <img src="emartinex.png" alt="Ing. Erik Gerardo Martínez Galindo" class="creator-avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="creator-avatar--fallback" style="display:none;" aria-hidden="true">
+                            <span>EGM</span>
+                        </div>
+
+                        <div class="creator-info">
+                            <h3 id="creatorName">Autor</h3>
+                            <p><strong>Ing. Erik Gerardo Martínez Galindo</strong></p>
+                            <ul class="creator-links">
+                                <li><i class="fab fa-facebook"></i> Facebook: <a href="https://facebook.com/emartinex" target="_blank" rel="noopener">emartinex</a></li>
+                                <li><i class="fab fa-instagram"></i> Instagram: <a href="https://instagram.com/emartinex2" target="_blank" rel="noopener">emartinex2</a></li>
+                                <li><i class="fab fa-youtube"></i> YouTube: <a href="https://www.youtube.com/@emartinex" target="_blank" rel="noopener">emartinex</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="muted-small" style="margin-top:.75rem;color:var(--text-muted);font-size:0.9rem;">© Derechos reservados <strong>emartinex</strong> </p>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 1: INTRODUCCIÓN ==================== -->
+            <section class="tab-panel" id="introduccion" data-tab="introduccion">
+                <header class="section-header">
+                    <h2><i class="fas fa-book-open"></i> Introducción</h2>
+                    <p>Fundamentos del análisis de vulnerabilidades en ciberseguridad</p>
+                </header>
+
+                <div class="info-cards">
+                    <div class="card info-card">
+                        <h3><i class="fas fa-unlock-keyhole"></i> ¿Qué es una vulnerabilidad?</h3>
+                        <p>Una <strong>vulnerabilidad</strong> es una debilidad o fallo en un sistema, aplicación, proceso o control de seguridad que puede ser explotado por una amenaza para comprometer la confidencialidad, integridad o disponibilidad (CIA) de la información.</p>
+                    </div>
+                    <div class="card info-card">
+                        <h3><i class="fas fa-triangle-exclamation"></i> Amenaza vs Vulnerabilidad vs Riesgo</h3>
+                        <ul>
+                            <li><strong>Amenaza:</strong> Evento o agente con potencial de causar daño (ej. hacker, malware).</li>
+                            <li><strong>Vulnerabilidad:</strong> Debilidad que puede ser aprovechada.</li>
+                            <li><strong>Riesgo:</strong> Probabilidad e impacto de que una amenaza explote una vulnerabilidad.</li>
+                        </ul>
+                    </div>
+                    <div class="card info-card">
+                        <h3><i class="fas fa-shield-virus"></i> Impacto en la seguridad</h3>
+                        <p>Las vulnerabilidades no parcheadas permiten accesos no autorizados, robo de datos, interrupción de servicios y daño reputacional. Su gestión proactiva es esencial en cualquier SOC.</p>
+                    </div>
+                </div>
+
+                <!-- Diagrama del ciclo de gestión de vulnerabilidades -->
+                <div class="card diagram-card">
+                    <h3><i class="fas fa-rotate"></i> Ciclo de gestión de vulnerabilidades</h3>
+                    <div class="cycle-diagram">
+                        <div class="cycle-step cycle-step--1"><i class="fas fa-magnifying-glass"></i><span>Identificar</span></div>
+                        <div class="cycle-arrow"><i class="fas fa-chevron-right"></i></div>
+                        <div class="cycle-step cycle-step--2"><i class="fas fa-chart-bar"></i><span>Evaluar</span></div>
+                        <div class="cycle-arrow"><i class="fas fa-chevron-right"></i></div>
+                        <div class="cycle-step cycle-step--3"><i class="fas fa-sort-amount-down"></i><span>Priorizar</span></div>
+                        <div class="cycle-arrow"><i class="fas fa-chevron-right"></i></div>
+                        <div class="cycle-step cycle-step--4"><i class="fas fa-wrench"></i><span>Remediar</span></div>
+                        <div class="cycle-arrow"><i class="fas fa-chevron-right"></i></div>
+                        <div class="cycle-step cycle-step--5"><i class="fas fa-eye"></i><span>Verificar</span></div>
+                        <div class="cycle-arrow cycle-arrow--return"><i class="fas fa-rotate-left"></i></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-globe"></i> Ejemplos reales</h3>
+                    <div class="example-grid">
+                        <div class="example-item example-item--critical">
+                            <span class="example-tag">Crítico</span>
+                            <h4>Log4Shell (CVE-2021-44228)</h4>
+                            <p>Fallo en Apache Log4j que permitió ejecución remota de código a escala global.</p>
+                        </div>
+                        <div class="example-item example-item--high">
+                            <span class="example-tag">Alto</span>
+                            <h4>WannaCry (MS17-010)</h4>
+                            <p>Explotó vulnerabilidad en SMB de Windows, afectando miles de organizaciones.</p>
+                        </div>
+                        <div class="example-item example-item--high">
+                            <span class="example-tag">Alto</span>
+                            <h4>Heartbleed (CVE-2014-0160)</h4>
+                            <p>Bug en OpenSSL que expuso datos sensibles en memoria de servidores.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 2: CVE ==================== -->
+            <section class="tab-panel" id="cve" data-tab="cve">
+                <header class="section-header">
+                    <h2><i class="fas fa-bug"></i> CVE – Common Vulnerabilities and Exposures</h2>
+                    <p>Sistema estandarizado de identificación de vulnerabilidades</p>
+                </header>
+
+                <div class="highlight-box">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Definición:</strong> CVE es un diccionario público de vulnerabilidades de seguridad informática con identificadores únicos asignados por MITRE y mantenidos en coordinación con la comunidad global.
+                    </div>
+                </div>
+
+                <div class="dashboard-grid dashboard-grid--2">
+                    <div class="card">
+                        <h3><i class="fas fa-fingerprint"></i> Estructura de un CVE</h3>
+                        <div class="cve-structure">
+                            <span class="cve-part cve-part--prefix">CVE</span>
+                            <span class="cve-part cve-part--year">-2021-</span>
+                            <span class="cve-part cve-part--id">44228</span>
+                        </div>
+                        <ul class="detail-list">
+                            <li><strong>Prefijo:</strong> "CVE" identifica el estándar</li>
+                            <li><strong>Año:</strong> Año de asignación o publicación</li>
+                            <li><strong>ID:</strong> Número secuencial único (4+ dígitos)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-search"></i> Cómo consultar vulnerabilidades</h3>
+                        <ul class="resource-list">
+                            <li><i class="fas fa-link"></i> <a href="https://cve.mitre.org" target="_blank" rel="noopener">cve.mitre.org</a></li>
+                            <li><i class="fas fa-link"></i> <a href="https://nvd.nist.gov" target="_blank" rel="noopener">nvd.nist.gov (NVD)</a></li>
+                            <li><i class="fas fa-link"></i> <a href="https://www.cvedetails.com" target="_blank" rel="noopener">cvedetails.com</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Línea de tiempo visual -->
+                <div class="card">
+                    <h3><i class="fas fa-timeline"></i> Línea de tiempo – Log4Shell</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">Nov 2021</span>
+                                <h4>Reporte inicial</h4>
+                                <p>Alibaba Cloud reporta la vulnerabilidad a Apache.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker timeline-marker--critical"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">9 Dic 2021</span>
+                                <h4>Asignación CVE-2021-44228</h4>
+                                <p>Publicación oficial y CVSS 10.0 (Crítico).</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker timeline-marker--warning"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">Dic 2021</span>
+                                <h4>Explotación masiva</h4>
+                                <p>Ataques automatizados contra servidores expuestos.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-marker timeline-marker--success"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-date">2022</span>
+                                <h4>Parches y mitigación</h4>
+                                <p>Actualizaciones de Log4j 2.15+ y 2.16+.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta de ejemplo CVE -->
+                <div class="cve-card">
+                    <div class="cve-card__header">
+                        <span class="cve-badge">CVE-2021-44228</span>
+                        <span class="severity-badge severity-badge--critical">CVSS 10.0</span>
+                    </div>
+                    <h3>Apache Log4j2 Remote Code Execution (Log4Shell)</h3>
+                    <p>Apache Log4j2 2.0-beta9 hasta 2.15.0 (excluyendo 2.12.2 y 2.3.1) permite ejecución remota de código cuando el logging configurado utiliza JNDI y mensajes controlados por el atacante.</p>
+                    <div class="cve-card__meta">
+                        <span><i class="fas fa-calendar"></i> Publicado: 2021-12-10</span>
+                        <span><i class="fas fa-tag"></i> CWE-502</span>
+                        <span><i class="fas fa-server"></i> Apache Log4j</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 3: CVSS ==================== -->
+            <section class="tab-panel" id="cvss" data-tab="cvss">
+                <header class="section-header">
+                    <h2><i class="fas fa-chart-line"></i> CVSS – Common Vulnerability Scoring System</h2>
+                    <p>Sistema de puntuación para evaluar la severidad de vulnerabilidades</p>
+                </header>
+
+                <div class="card">
+                    <h3>Definición</h3>
+                    <p>CVSS proporciona una forma abierta y estandarizada de capturar las características principales de una vulnerabilidad y producir un puntaje numérico (0.0 – 10.0) que refleja su severidad.</p>
+                </div>
+
+                <!-- Barra de severidad visual -->
+                <div class="card">
+                    <h3><i class="fas fa-signal"></i> Escala de severidad</h3>
+                    <div class="severity-bar">
+                        <div class="severity-segment severity-segment--none" data-severity="none">
+                            <span>0.0</span><small>Ninguno</small>
+                        </div>
+                        <div class="severity-segment severity-segment--low" data-severity="low">
+                            <span>0.1–3.9</span><small>Bajo</small>
+                        </div>
+                        <div class="severity-segment severity-segment--medium" data-severity="medium">
+                            <span>4.0–6.9</span><small>Medio</small>
+                        </div>
+                        <div class="severity-segment severity-segment--high" data-severity="high">
+                            <span>7.0–8.9</span><small>Alto</small>
+                        </div>
+                        <div class="severity-segment severity-segment--critical" data-severity="critical">
+                            <span>9.0–10.0</span><small>Crítico</small>
+                        </div>
+                    </div>
+                    <p class="severity-info" id="severityInfo">Pasa el cursor sobre cada segmento para ver detalles.</p>
+                </div>
+
+                <!-- Tabla interactiva CVSS -->
+                <div class="card">
+                    <h3><i class="fas fa-table"></i> Métricas CVSS v3.1</h3>
+                    <div class="table-responsive">
+                        <table class="interactive-table" id="cvssTable">
+                            <thead>
+                                <tr>
+                                    <th>Tipo de Score</th>
+                                    <th>Descripción</th>
+                                    <th>Uso</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-row="base">
+                                    <td><strong>Base Score</strong></td>
+                                    <td>Características intrínsecas de la vulnerabilidad</td>
+                                    <td>Evaluación inicial de severidad</td>
+                                    <td><button class="btn btn--sm btn--outline cvss-detail-btn" data-type="base">Ver detalle</button></td>
+                                </tr>
+                                <tr data-row="temporal">
+                                    <td><strong>Temporal Score</strong></td>
+                                    <td>Modifica el Base según factores temporales</td>
+                                    <td>Exploits disponibles, parches</td>
+                                    <td><button class="btn btn--sm btn--outline cvss-detail-btn" data-type="temporal">Ver detalle</button></td>
+                                </tr>
+                                <tr data-row="environmental">
+                                    <td><strong>Environmental Score</strong></td>
+                                    <td>Personalizado al entorno organizacional</td>
+                                    <td>Impacto en activos específicos</td>
+                                    <td><button class="btn btn--sm btn--outline cvss-detail-btn" data-type="environmental">Ver detalle</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="cvss-detail-panel" id="cvssDetailPanel" hidden></div>
+                </div>
+
+                <!-- Ejemplos de clasificación -->
+                <div class="card">
+                    <h3><i class="fas fa-list-check"></i> Ejemplos de clasificación</h3>
+                    <div class="classification-grid">
+                        <div class="classification-item classification-item--critical">
+                            <span class="score">10.0</span>
+                            <h4>Log4Shell</h4>
+                            <p>RCE sin autenticación, explotación trivial</p>
+                        </div>
+                        <div class="classification-item classification-item--high">
+                            <span class="score">8.8</span>
+                            <h4>SQL Injection</h4>
+                            <p>Acceso no autorizado a base de datos</p>
+                        </div>
+                        <div class="classification-item classification-item--medium">
+                            <span class="score">5.4</span>
+                            <h4>XSS Reflejado</h4>
+                            <p>Requiere interacción del usuario</p>
+                        </div>
+                        <div class="classification-item classification-item--low">
+                            <span class="score">2.7</span>
+                            <h4>Info Disclosure</h4>
+                            <p>Exposición de información no crítica</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 4: EXPLOITDB ==================== -->
+            <section class="tab-panel" id="exploitdb" data-tab="exploitdb">
+                <header class="section-header">
+                    <h2><i class="fas fa-database"></i> ExploitDB</h2>
+                    <p>Base de datos pública de exploits y pruebas de concepto</p>
+                </header>
+
+                <div class="info-cards">
+                    <div class="card info-card">
+                        <h3>¿Qué es ExploitDB?</h3>
+                        <p>Exploit Database (ExploitDB) es un repositorio mantenido por Offensive Security que cataloga exploits públicos, shellcodes y papers de investigación de seguridad asociados a vulnerabilidades conocidas.</p>
+                    </div>
+                    <div class="card info-card">
+                        <h3>Relación CVE ↔ Exploit</h3>
+                        <p>Un CVE identifica la vulnerabilidad; un exploit en ExploitDB es código o técnica que demuestra cómo explotarla. No todo CVE tiene exploit público disponible.</p>
+                    </div>
+                    <div class="card info-card">
+                        <h3>Uso ético</h3>
+                        <p>Solo utilizar en entornos autorizados, laboratorios controlados o con permiso explícito. El uso no autorizado es ilegal y antiético.</p>
+                    </div>
+                </div>
+
+                <!-- Flujo visual -->
+                <div class="card flow-card">
+                    <h3><i class="fas fa-diagram-project"></i> Flujo: Vulnerabilidad → Riesgo</h3>
+                    <div class="flow-diagram">
+                        <div class="flow-node flow-node--vuln">
+                            <i class="fas fa-unlock"></i>
+                            <span>Vulnerabilidad</span>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-node flow-node--cve">
+                            <i class="fas fa-bug"></i>
+                            <span>CVE</span>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-node flow-node--exploit">
+                            <i class="fas fa-code"></i>
+                            <span>Exploit</span>
+                        </div>
+                        <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="flow-node flow-node--risk">
+                            <i class="fas fa-skull-crossbones"></i>
+                            <span>Riesgo</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-terminal"></i> Ejemplos de búsqueda</h3>
+                    <div class="code-block">
+                        <div class="code-block__header"><span>searchsploit</span><button class="copy-btn" data-copy="searchsploit log4j"><i class="fas fa-copy"></i></button></div>
+                        <pre><code>searchsploit log4j</code></pre>
+                    </div>
+                    <div class="code-block">
+                        <div class="code-block__header"><span>Web – exploit-db.com</span></div>
+                        <pre><code>https://www.exploit-db.com/search?q=CVE-2021-44228</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 5: VULNERABILITY SCANNING ==================== -->
+            <section class="tab-panel" id="scanning" data-tab="scanning">
+                <header class="section-header">
+                    <h2><i class="fas fa-radar"></i> Vulnerability Scanning</h2>
+                    <p>Proceso automatizado de detección de debilidades</p>
+                </header>
+
+                <div class="card">
+                    <h3>Concepto</h3>
+                    <p>El escaneo de vulnerabilidades es el proceso de identificar, analizar y reportar debilidades de seguridad en sistemas, redes y aplicaciones mediante herramientas especializadas.</p>
+                </div>
+
+                <!-- Diagrama de proceso -->
+                <div class="card diagram-card">
+                    <h3><i class="fas fa-sitemap"></i> Diagrama de proceso</h3>
+                    <div class="process-diagram">
+                        <div class="process-step"><span>1</span><i class="fas fa-bullseye"></i><p>Definir alcance</p></div>
+                        <div class="process-connector"></div>
+                        <div class="process-step"><span>2</span><i class="fas fa-cog"></i><p>Configurar escaneo</p></div>
+                        <div class="process-connector"></div>
+                        <div class="process-step"><span>3</span><i class="fas fa-radar"></i><p>Ejecutar scan</p></div>
+                        <div class="process-connector"></div>
+                        <div class="process-step"><span>4</span><i class="fas fa-file-lines"></i><p>Analizar resultados</p></div>
+                        <div class="process-connector"></div>
+                        <div class="process-step"><span>5</span><i class="fas fa-wrench"></i><p>Remediar</p></div>
+                    </div>
+                </div>
+
+                <!-- Comparativas visuales -->
+                <div class="comparison-grid">
+                    <div class="card comparison-card comparison-card--pro">
+                        <h3><i class="fas fa-thumbs-up"></i> Ventajas</h3>
+                        <ul>
+                            <li>Detección automatizada y rápida</li>
+                            <li>Cobertura de múltiples activos</li>
+                            <li>Priorización basada en CVSS</li>
+                            <li>Cumplimiento normativo (PCI-DSS, ISO 27001)</li>
+                        </ul>
+                    </div>
+                    <div class="card comparison-card comparison-card--con">
+                        <h3><i class="fas fa-thumbs-down"></i> Limitaciones</h3>
+                        <ul>
+                            <li>No detecta lógica de negocio vulnerable</li>
+                            <li>Puede generar falsos positivos/negativos</li>
+                            <li>Requiere validación manual</li>
+                            <li>Impacto en rendimiento de sistemas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid dashboard-grid--2">
+                    <div class="card alert-card alert-card--warning">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Falsos positivos</h3>
+                        <p>El escaneo reporta una vulnerabilidad que en realidad no existe o no es explotable en el contexto del activo. Requiere verificación manual.</p>
+                    </div>
+                    <div class="card alert-card alert-card--danger">
+                        <h3><i class="fas fa-times-circle"></i> Falsos negativos</h3>
+                        <p>El escaneo no detecta una vulnerabilidad real presente en el sistema. Puede ocurrir por firmas desactualizadas o configuraciones personalizadas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 6: OPENVAS ==================== -->
+            <section class="tab-panel" id="openvas" data-tab="openvas">
+                <header class="section-header">
+                    <h2><i class="fas fa-server"></i> OpenVAS</h2>
+                    <p>Escáner de vulnerabilidades open source</p>
+                </header>
+
+                <div class="info-cards">
+                    <div class="card info-card">
+                        <h3><i class="fas fa-info"></i> Descripción</h3>
+                        <p>OpenVAS (Open Vulnerability Assessment System) es una solución completa de escaneo de vulnerabilidades de código abierto, integrada en Greenbone Vulnerability Management.</p>
+                    </div>
+                    <div class="card info-card">
+                        <h3><i class="fas fa-sitemap"></i> Arquitectura</h3>
+                        <ul>
+                            <li><strong>Greenbone Management:</strong> Interfaz web y gestión</li>
+                            <li><strong>OpenVAS Scanner:</strong> Motor de escaneo</li>
+                            <li><strong>Feed NVT:</strong> Base de pruebas actualizada</li>
+                        </ul>
+                    </div>
+                    <div class="card info-card">
+                        <h3><i class="fas fa-star"></i> Ventajas</h3>
+                        <ul>
+                            <li>Gratuito y open source</li>
+                            <li>Amplia base de NVTs</li>
+                            <li>Reportes detallados</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-briefcase"></i> Casos de uso</h3>
+                    <ul class="check-list">
+                        <li><i class="fas fa-check-circle"></i> Auditorías de seguridad en PYMEs</li>
+                        <li><i class="fas fa-check-circle"></i> Escaneos periódicos de infraestructura</li>
+                        <li><i class="fas fa-check-circle"></i> Laboratorios educativos de ciberseguridad</li>
+                        <li><i class="fas fa-check-circle"></i> Evaluación de cumplimiento normativo</li>
+                    </ul>
+                </div>
+
+                <!-- Dashboard simulado de resultados (datos ficticios con fines didácticos) -->
+                <div class="card">
+                    <div class="hero__badge"><i class="fas fa-flask"></i> Datos ilustrativos con fines didácticos</div>
+                    <h3><i class="fas fa-chart-pie"></i> Dashboard de resultados – Greenbone / OpenVAS</h3>
+
+                    <div class="cve-card__meta" style="margin-top: 0.75rem; margin-bottom: 1.5rem;">
+                        <span><i class="fas fa-crosshairs"></i> Objetivo: 192.168.56.0/24</span>
+                        <span><i class="fas fa-calendar"></i> Última ejecución: 10 jun 2026, 02:14</span>
+                        <span><i class="fas fa-server"></i> Hosts escaneados: 6</span>
+                        <span><i class="fas fa-stopwatch"></i> Duración: 38 min</span>
+                    </div>
+
+                    <h4><i class="fas fa-signal"></i> Distribución de severidad (CVSS)</h4>
+                    <div class="classification-grid" style="margin: 1rem 0 1.5rem;">
+                        <div class="classification-item classification-item--critical">
+                            <span class="score">3</span>
+                            <h4>Críticas</h4>
+                            <p>CVSS 9.0 – 10.0</p>
+                        </div>
+                        <div class="classification-item classification-item--high">
+                            <span class="score">7</span>
+                            <h4>Altas</h4>
+                            <p>CVSS 7.0 – 8.9</p>
+                        </div>
+                        <div class="classification-item classification-item--medium">
+                            <span class="score">12</span>
+                            <h4>Medias</h4>
+                            <p>CVSS 4.0 – 6.9</p>
+                        </div>
+                        <div class="classification-item classification-item--low">
+                            <span class="score">5</span>
+                            <h4>Bajas</h4>
+                            <p>CVSS 0.1 – 3.9</p>
+                        </div>
+                    </div>
+
+                    <h4><i class="fas fa-list"></i> Resultados del escaneo (simulados)</h4>
+                    <div class="table-responsive" style="margin-bottom: 1.5rem;">
+                        <table class="interactive-table">
+                            <thead>
+                                <tr>
+                                    <th>Host</th>
+                                    <th>Vulnerabilidad</th>
+                                    <th>CVE</th>
+                                    <th>CVSS</th>
+                                    <th>Severidad</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>192.168.56.101</td>
+                                    <td>vsftpd 2.3.4 Backdoor</td>
+                                    <td>CVE-2011-2523</td>
+                                    <td>9.8</td>
+                                    <td><span class="severity-badge severity-badge--critical">Crítico</span></td>
+                                </tr>
+                                <tr>
+                                    <td>192.168.56.103</td>
+                                    <td>SMB acceso anónimo (EternalBlue)</td>
+                                    <td>CVE-2017-0144</td>
+                                    <td>8.1</td>
+                                    <td><span class="severity-badge severity-badge--critical">Crítico</span></td>
+                                </tr>
+                                <tr>
+                                    <td>192.168.56.101</td>
+                                    <td>OpenSSH claves débiles</td>
+                                    <td>CVE-2008-0166</td>
+                                    <td>7.5</td>
+                                    <td><span class="severity-badge severity-badge--high">Alto</span></td>
+                                </tr>
+                                <tr>
+                                    <td>192.168.56.102</td>
+                                    <td>Apache Tomcat Manager expuesto</td>
+                                    <td>N/A</td>
+                                    <td>7.0</td>
+                                    <td><span class="severity-badge severity-badge--high">Alto</span></td>
+                                </tr>
+                                <tr>
+                                    <td>192.168.56.104</td>
+                                    <td>PHP-CGI mala configuración</td>
+                                    <td>CVE-2012-1823</td>
+                                    <td>6.4</td>
+                                    <td><span class="severity-badge severity-badge--medium">Medio</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4><i class="fas fa-clock"></i> Tareas programadas</h4>
+                    <div class="table-responsive">
+                        <table class="interactive-table">
+                            <thead>
+                                <tr>
+                                    <th>Tarea</th>
+                                    <th>Objetivo</th>
+                                    <th>Frecuencia</th>
+                                    <th>Próxima ejecución</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Escaneo semanal – Red interna</td>
+                                    <td>192.168.56.0/24</td>
+                                    <td>Semanal (lun 02:00)</td>
+                                    <td>22 jun 2026, 02:00</td>
+                                    <td><span class="tag tag--green">Activa</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Auditoría mensual – DMZ</td>
+                                    <td>10.0.5.0/24</td>
+                                    <td>Mensual (día 1)</td>
+                                    <td>01 jul 2026, 03:00</td>
+                                    <td><span class="tag tag--blue">Programada</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Full &amp; Fast – Servidores críticos</td>
+                                    <td>192.168.56.10–50</td>
+                                    <td>Diaria</td>
+                                    <td>En curso</td>
+                                    <td><span class="tag tag--blue">En ejecución (64%)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 7: NESSUS ==================== -->
+            <section class="tab-panel" id="nessus" data-tab="nessus">
+                <header class="section-header">
+                    <h2><i class="fas fa-microscope"></i> Nessus</h2>
+                    <p>Escáner comercial líder en la industria</p>
+                </header>
+
+                <div class="dashboard-grid dashboard-grid--2">
+                    <div class="card">
+                        <h3>Descripción</h3>
+                        <p>Nessus, desarrollado por Tenable, es uno de los escáneres de vulnerabilidades más utilizados en la industria, conocido por su precisión y extensa base de plugins.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Características</h3>
+                        <ul>
+                            <li>Más de 100,000 plugins</li>
+                            <li>Escaneos credentialed y non-credentialed</li>
+                            <li>Integración con SIEM y ticketing</li>
+                            <li>Reportes ejecutivos y técnicos</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-briefcase"></i> Casos de uso</h3>
+                    <div class="use-case-grid">
+                        <div class="use-case"><i class="fas fa-building"></i> Empresas corporativas</div>
+                        <div class="use-case"><i class="fas fa-cloud"></i> Infraestructura cloud</div>
+                        <div class="use-case"><i class="fas fa-user-shield"></i> Consultorías de pentesting</div>
+                        <div class="use-case"><i class="fas fa-gavel"></i> Auditorías de cumplimiento</div>
+                    </div>
+                </div>
+
+                <!-- Comparativa OpenVAS vs Nessus -->
+                <div class="card">
+                    <h3><i class="fas fa-balance-scale"></i> Comparativa: OpenVAS vs Nessus</h3>
+                    <div class="table-responsive">
+                        <table class="compare-table">
+                            <thead>
+                                <tr>
+                                    <th>Criterio</th>
+                                    <th>OpenVAS</th>
+                                    <th>Nessus</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Licencia</td>
+                                    <td><span class="tag tag--green">Open Source</span></td>
+                                    <td><span class="tag tag--blue">Comercial</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Costo</td>
+                                    <td>Gratuito</td>
+                                    <td>Desde ~$3,000 USD/año</td>
+                                </tr>
+                                <tr>
+                                    <td>Plugins/NVTs</td>
+                                    <td>~90,000 NVTs</td>
+                                    <td>~100,000+ plugins</td>
+                                </tr>
+                                <tr>
+                                    <td>Facilidad de uso</td>
+                                    <td>Media</td>
+                                    <td>Alta</td>
+                                </tr>
+                                <tr>
+                                    <td>Soporte</td>
+                                    <td>Comunidad</td>
+                                    <td>Soporte comercial Tenable</td>
+                                </tr>
+                                <tr>
+                                    <td>Ideal para</td>
+                                    <td>Educación, PYMEs, presupuesto limitado</td>
+                                    <td>Empresas, SOC, compliance</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 8: NIKTO ==================== -->
+            <section class="tab-panel" id="nikto" data-tab="nikto">
+                <header class="section-header">
+                    <h2><i class="fas fa-globe"></i> Nikto</h2>
+                    <p>Escáner de vulnerabilidades para servidores web</p>
+                </header>
+
+                <div class="dashboard-grid dashboard-grid--2">
+                    <div class="card">
+                        <h3>¿Qué es Nikto?</h3>
+                        <p>Nikto es una herramienta open source de escaneo de servidores web que detecta archivos peligrosos, configuraciones incorrectas, versiones obsoletas y más de 6,700 checks conocidos.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Principales funciones</h3>
+                        <ul>
+                            <li>Detección de CGI peligrosos</li>
+                            <li>Identificación de versiones de software</li>
+                            <li>Búsqueda de archivos y directorios sensibles</li>
+                            <li>Detección de headers inseguros</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-briefcase"></i> Casos de uso</h3>
+                    <ul class="check-list">
+                        <li><i class="fas fa-check-circle"></i> Auditoría rápida de servidores web</li>
+                        <li><i class="fas fa-check-circle"></i> Reconocimiento en pentesting web</li>
+                        <li><i class="fas fa-check-circle"></i> Verificación post-despliegue</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-terminal"></i> Ejemplos de comandos</h3>
+                    <div class="code-block code-block--syntax">
+                        <div class="code-block__header"><span>Escaneo por IP</span><button class="copy-btn" data-copy="nikto -h 192.168.1.10"><i class="fas fa-copy"></i></button></div>
+                        <pre><code><span class="syntax-cmd">nikto</span> <span class="syntax-flag">-h</span> <span class="syntax-target">192.168.1.10</span></code></pre>
+                    </div>
+                    <div class="code-block code-block--syntax">
+                        <div class="code-block__header"><span>Escaneo HTTPS</span><button class="copy-btn" data-copy="nikto -h https://empresa.com"><i class="fas fa-copy"></i></button></div>
+                        <pre><code><span class="syntax-cmd">nikto</span> <span class="syntax-flag">-h</span> <span class="syntax-target">https://empresa.com</span></code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 9: LABORATORIO ==================== -->
+            <section class="tab-panel" id="laboratorio" data-tab="laboratorio">
+                <header class="section-header">
+                    <h2><i class="fas fa-flask"></i> Laboratorio</h2>
+                    <p>Ejercicio teórico-práctico – Identificación, análisis y priorización de vulnerabilidades</p>
+                </header>
+
+                <!-- Encabezado del ejercicio -->
+                <div class="lab-activity-hero">
+                    <div class="lab-activity-hero__badge"><i class="fas fa-graduation-cap"></i> Ejercicio Teórico-Práctico</div>
+                    <p class="lab-activity-hero__week">Semana 6 – Análisis de Vulnerabilidades</p>
+                    <h3 class="lab-activity-hero__title">Identificación, Análisis y Priorización de Vulnerabilidades en un Servidor Empresarial</h3>
+                </div>
+
+                <!-- Objetivos de la actividad -->
+                <div class="card card--highlight">
+                    <h3><i class="fas fa-bullseye"></i> Objetivo</h3>
+                    <p class="lab-intro">Al finalizar la actividad, el estudiante será capaz de:</p>
+                    <ul class="check-list">
+                        <li><i class="fas fa-check-circle"></i> Interpretar información proveniente de herramientas de análisis de vulnerabilidades</li>
+                        <li><i class="fas fa-check-circle"></i> Identificar vulnerabilidades mediante CVE</li>
+                        <li><i class="fas fa-check-circle"></i> Analizar el nivel de severidad utilizando CVSS</li>
+                        <li><i class="fas fa-check-circle"></i> Investigar información complementaria en ExploitDB</li>
+                        <li><i class="fas fa-check-circle"></i> Priorizar vulnerabilidades según el riesgo para la organización</li>
+                        <li><i class="fas fa-check-circle"></i> Elaborar una matriz de vulnerabilidades con recomendaciones de mitigación</li>
+                    </ul>
+                </div>
+
+                <!-- ==================== PARTE I: ANÁLISIS TEÓRICO ==================== -->
+                <div class="lab-part">
+                    <div class="lab-part__header">
+                        <span class="lab-part__number">I</span>
+                        <h3>Análisis Teórico</h3>
+                    </div>
+
+                    <div class="card">
+                        <h4><i class="fas fa-building"></i> Escenario</h4>
+                        <p>Una empresa ha realizado un análisis de vulnerabilidades sobre un <strong>servidor web interno</strong> y ha obtenido los siguientes resultados.</p>
+                    </div>
+
+                    <!-- Hallazgos del escaneo -->
+                    <div class="findings-grid">
+                        <div class="card finding-card finding-card--high">
+                            <div class="finding-card__header">
+                                <span class="finding-badge">Hallazgo 1</span>
+                                <span class="severity-badge severity-badge--high">CVSS 7.5</span>
+                            </div>
+                            <table class="finding-table">
+                                <tr><th>Servicio</th><td>Apache HTTP Server</td></tr>
+                                <tr><th>Puerto</th><td>80/TCP</td></tr>
+                                <tr><th>Vulnerabilidad</th><td>Apache Path Traversal</td></tr>
+                                <tr><th>CVE</th><td><code>CVE-2021-41773</code></td></tr>
+                                <tr><th>CVSS</th><td>7.5</td></tr>
+                                <tr><th>Estado</th><td><span class="tag tag--red">Vulnerable</span></td></tr>
+                            </table>
+                        </div>
+
+                        <div class="card finding-card finding-card--critical">
+                            <div class="finding-card__header">
+                                <span class="finding-badge">Hallazgo 2</span>
+                                <span class="severity-badge severity-badge--critical">CVSS 8.1</span>
+                            </div>
+                            <table class="finding-table">
+                                <tr><th>Servicio</th><td>SMB</td></tr>
+                                <tr><th>Puerto</th><td>445/TCP</td></tr>
+                                <tr><th>Vulnerabilidad</th><td>EternalBlue</td></tr>
+                                <tr><th>CVE</th><td><code>CVE-2017-0144</code></td></tr>
+                                <tr><th>CVSS</th><td>8.1</td></tr>
+                                <tr><th>Estado</th><td><span class="tag tag--red">Vulnerable</span></td></tr>
+                            </table>
+                        </div>
+
+                        <div class="card finding-card finding-card--medium">
+                            <div class="finding-card__header">
+                                <span class="finding-badge">Hallazgo 3</span>
+                                <span class="severity-badge severity-badge--medium">CVSS 5.3</span>
+                            </div>
+                            <table class="finding-table">
+                                <tr><th>Servicio</th><td>FTP</td></tr>
+                                <tr><th>Puerto</th><td>21/TCP</td></tr>
+                                <tr><th>Vulnerabilidad</th><td>Anonymous Login Enabled</td></tr>
+                                <tr><th>CVE</th><td>No aplica</td></tr>
+                                <tr><th>CVSS</th><td>5.3</td></tr>
+                                <tr><th>Estado</th><td><span class="tag tag--red">Vulnerable</span></td></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Actividad 1 -->
+                    <div class="card activity-card">
+                        <div class="activity-card__header">
+                            <span class="activity-badge">Actividad 1</span>
+                            <h4>Investigación de CVE</h4>
+                        </div>
+                        <p>Investigue cada CVE y complete la siguiente tabla:</p>
+                        <div class="table-responsive">
+                            <table class="worksheet-table">
+                                <thead>
+                                    <tr>
+                                        <th>CVE</th>
+                                        <th>Descripción</th>
+                                        <th>Impacto</th>
+                                        <th>Sistema afectado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>CVE-2021-41773</code></td>
+                                        <td><textarea rows="2" placeholder="Describa la vulnerabilidad..."></textarea></td>
+                                        <td><textarea rows="2" placeholder="Impacto en CIA..."></textarea></td>
+                                        <td><input type="text" placeholder="Sistema / versión afectada"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>CVE-2017-0144</code></td>
+                                        <td><textarea rows="2" placeholder="Describa la vulnerabilidad..."></textarea></td>
+                                        <td><textarea rows="2" placeholder="Impacto en CIA..."></textarea></td>
+                                        <td><input type="text" placeholder="Sistema / versión afectada"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Actividad 2 -->
+                    <div class="card activity-card">
+                        <div class="activity-card__header">
+                            <span class="activity-badge">Actividad 2</span>
+                            <h4>Clasificación CVSS</h4>
+                        </div>
+                        <p>Clasifique las vulnerabilidades según el estándar CVSS:</p>
+                        <div class="table-responsive">
+                            <table class="worksheet-table">
+                                <thead>
+                                    <tr>
+                                        <th>Vulnerabilidad</th>
+                                        <th>CVSS</th>
+                                        <th>Severidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Apache Path Traversal</td>
+                                        <td>7.5</td>
+                                        <td>
+                                            <select>
+                                                <option value="">Seleccionar</option>
+                                                <option value="Bajo">Bajo</option>
+                                                <option value="Medio">Medio</option>
+                                                <option value="Alto">Alto</option>
+                                                <option value="Crítico">Crítico</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>EternalBlue</td>
+                                        <td>8.1</td>
+                                        <td>
+                                            <select>
+                                                <option value="">Seleccionar</option>
+                                                <option value="Bajo">Bajo</option>
+                                                <option value="Medio">Medio</option>
+                                                <option value="Alto">Alto</option>
+                                                <option value="Crítico">Crítico</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Anonymous FTP</td>
+                                        <td>5.3</td>
+                                        <td>
+                                            <select>
+                                                <option value="">Seleccionar</option>
+                                                <option value="Bajo">Bajo</option>
+                                                <option value="Medio">Medio</option>
+                                                <option value="Alto">Alto</option>
+                                                <option value="Crítico">Crítico</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Actividad 3 -->
+                    <div class="card activity-card">
+                        <div class="activity-card__header">
+                            <span class="activity-badge">Actividad 3</span>
+                            <h4>Preguntas de reflexión</h4>
+                        </div>
+                        <p>Responda las siguientes preguntas:</p>
+                        <div class="lab-questions">
+                            <div class="lab-question">
+                                <label for="q1">1. ¿Qué es un CVE?</label>
+                                <textarea id="q1" rows="2" placeholder="Escriba su respuesta..."></textarea>
+                            </div>
+                            <div class="lab-question">
+                                <label for="q2">2. ¿Cuál es la función del CVSS?</label>
+                                <textarea id="q2" rows="2" placeholder="Escriba su respuesta..."></textarea>
+                            </div>
+                            <div class="lab-question">
+                                <label for="q3">3. ¿Por qué una vulnerabilidad con exploit público representa mayor riesgo?</label>
+                                <textarea id="q3" rows="2" placeholder="Escriba su respuesta..."></textarea>
+                            </div>
+                            <div class="lab-question">
+                                <label for="q4">4. ¿Qué ventajas ofrece ExploitDB para un analista de seguridad?</label>
+                                <textarea id="q4" rows="2" placeholder="Escriba su respuesta..."></textarea>
+                            </div>
+                            <div class="lab-question">
+                                <label for="q5">5. ¿Qué diferencia existe entre una vulnerabilidad y una amenaza?</label>
+                                <textarea id="q5" rows="2" placeholder="Escriba su respuesta..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== PARTE II: EXPLOITDB ==================== -->
+                <div class="lab-part">
+                    <div class="lab-part__header">
+                        <span class="lab-part__number">II</span>
+                        <h3>Investigación en ExploitDB</h3>
+                    </div>
+
+                    <div class="card activity-card">
+                        <div class="activity-card__header">
+                            <span class="activity-badge">Actividad 4</span>
+                            <h4>Búsqueda en ExploitDB</h4>
+                        </div>
+                        <p>Busque en <a href="https://www.exploit-db.com" target="_blank" rel="noopener">ExploitDB</a> información relacionada con los siguientes CVE y complete la tabla:</p>
+                        <ul class="resource-list lab-cve-list">
+                            <li><i class="fas fa-bug"></i> <code>CVE-2021-41773</code></li>
+                            <li><i class="fas fa-bug"></i> <code>CVE-2017-0144</code></li>
+                        </ul>
+                        <div class="table-responsive">
+                            <table class="worksheet-table">
+                                <thead>
+                                    <tr>
+                                        <th>CVE</th>
+                                        <th>¿Existe exploit público?</th>
+                                        <th>Tipo de exploit</th>
+                                        <th>Nivel de riesgo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>CVE-2021-41773</code></td>
+                                        <td>
+                                            <select>
+                                                <option value="">Seleccionar</option>
+                                                <option value="Sí">Sí</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" placeholder="Ej: Remote Code Execution"></td>
+                                        <td>
+                                            <select>
+                                                <option value="">Seleccionar</option>
+                                                <option value="Bajo">Bajo</option>
+                                                <option value="Medio">Medio</option>
+                                                <option value="Alto">Alto</option>
+                                                <option value="Crítico">Crítico</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>CVE-2017-0144</code></td>
+                                        <td>
+                                            <select>
+                                                <option value="">Seleccionar</option>
+                                                <option value="Sí">Sí</option>
+                                                <option value="No">No</option>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" placeholder="Ej: Remote Code Execution"></td>
+                                        <td>
+                                            <select>
+                                                <option value="">Seleccionar</option>
+                                                <option value="Bajo">Bajo</option>
+                                                <option value="Medio">Medio</option>
+                                                <option value="Alto">Alto</option>
+                                                <option value="Crítico">Crítico</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== PARTE III: LABORATORIO PRÁCTICO ==================== -->
+                <div class="lab-part">
+                    <div class="lab-part__header">
+                        <span class="lab-part__number">III</span>
+                        <h3>Laboratorio Práctico</h3>
+                    </div>
+
+                    <div class="card">
+                        <h4><i class="fas fa-server"></i> Escenario</h4>
+                        <p>Se dispone de una máquina virtual <strong>Metasploitable</strong> accesible desde <strong>Kali Linux</strong>.</p>
+                        <p class="lab-note"><i class="fas fa-download"></i> Se recomienda utilizar la máquina <strong>Metasploitable2</strong>, disponible en VulnHub: <a href="https://www.vulnhub.com/entry/metasploitable-2,29/" target="_blank" rel="noopener">vulnhub.com/entry/metasploitable-2,29</a>.</p>
+                    </div>
+
+                    <!-- Topología -->
+                    <div class="card diagram-card">
+                        <h4><i class="fas fa-network-wired"></i> Topología de laboratorio</h4>
+                        <div class="lab-topology">
+                            <div class="topology-node topology-node--kali">
+                                <i class="fab fa-linux"></i>
+                                <strong>Kali Linux</strong>
+                                <span>Atacante / Escáner</span>
+                            </div>
+                            <div class="topology-arrow">
+                                <i class="fas fa-arrow-down"></i>
+                                <span>Red NAT / Host-Only</span>
+                            </div>
+                            <div class="topology-node topology-node--target">
+                                <i class="fas fa-server"></i>
+                                <strong>Metasploitable 2</strong>
+                                <span>Objetivo vulnerable</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h4><i class="fas fa-clipboard-list"></i> Requisitos</h4>
+                        <ul class="check-list">
+                            <li><i class="fas fa-check-circle"></i> VirtualBox o VMware instalado</li>
+                            <li><i class="fas fa-check-circle"></i> VM Kali Linux actualizada</li>
+                            <li><i class="fas fa-check-circle"></i> VM Metasploitable 2</li>
+                            <li><i class="fas fa-check-circle"></i> Red configurada (NAT o Host-Only)</li>
+                            <li><i class="fas fa-check-circle"></i> Autorización del instructor para el laboratorio</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4><i class="fas fa-list-ol"></i> Procedimiento paso a paso</h4>
+                        <ol class="procedure-list">
+                            <li>
+                                <strong>Paso 1 – Identificar la dirección IP de Metasploitable</strong>
+                                <div class="code-block code-block--syntax">
+                                    <div class="code-block__header"><span>Metasploitable</span><button class="copy-btn" data-copy="ip addr"><i class="fas fa-copy"></i></button></div>
+                                    <pre><code><span class="syntax-cmd">ip addr</span></code></pre>
+                                </div>
+                                <p class="procedure-alt">o</p>
+                                <div class="code-block code-block--syntax">
+                                    <div class="code-block__header"><span>Alternativa</span><button class="copy-btn" data-copy="ifconfig"><i class="fas fa-copy"></i></button></div>
+                                    <pre><code><span class="syntax-cmd">ifconfig</span></code></pre>
+                                </div>
+                            </li>
+                            <li>
+                                <strong>Paso 2 – Verificar conectividad</strong>
+                                <div class="code-block code-block--syntax">
+                                    <div class="code-block__header"><span>Kali Linux</span><button class="copy-btn" data-copy="ping <IP_Metasploitable>"><i class="fas fa-copy"></i></button></div>
+                                    <pre><code><span class="syntax-cmd">ping</span> <span class="syntax-target">&lt;IP_Metasploitable&gt;</span></code></pre>
+                                </div>
+                            </li>
+                            <li>
+                                <strong>Paso 3 – Escaneo de puertos y vulnerabilidades con Nmap</strong>
+                                <p>Desde Kali Linux, utilice Nmap para identificar puertos abiertos, servicios, sistema operativo y posibles vulnerabilidades del objetivo antes de pasar a un escáner dedicado.</p>
+                                <div class="code-block code-block--syntax">
+                                    <div class="code-block__header"><span>Escaneo SYN de puertos (host único)</span><button class="copy-btn" data-copy="sudo nmap -v --reason -sS -oX puertos.xml --stylesheet=&quot;https://svn.nmap.org/nmap/docs/nmap.xsl&quot; 192.168.141.134"><i class="fas fa-copy"></i></button></div>
+                                    <pre><code><span class="syntax-cmd">sudo nmap</span> <span class="syntax-flag">-v --reason -sS -oX puertos.xml --stylesheet="https://svn.nmap.org/nmap/docs/nmap.xsl"</span> <span class="syntax-target">192.168.141.134</span></code></pre>
+                                </div>
+                                <div class="code-block code-block--syntax">
+                                    <div class="code-block__header"><span>Detección de versión y SO (red completa)</span><button class="copy-btn" data-copy="sudo nmap -v --reason -sV -O -oX resultados.xml --stylesheet=&quot;https://svn.nmap.org/nmap/docs/nmap.xsl&quot; 192.168.141.0/24"><i class="fas fa-copy"></i></button></div>
+                                    <pre><code><span class="syntax-cmd">sudo nmap</span> <span class="syntax-flag">-v --reason -sV -O -oX resultados.xml --stylesheet="https://svn.nmap.org/nmap/docs/nmap.xsl"</span> <span class="syntax-target">192.168.141.0/24</span></code></pre>
+                                </div>
+                                <div class="code-block code-block--syntax">
+                                    <div class="code-block__header"><span>Detección de vulnerabilidades (scripts NSE)</span><button class="copy-btn" data-copy="sudo nmap -sV --script vuln 192.168.141.134"><i class="fas fa-copy"></i></button></div>
+                                    <pre><code><span class="syntax-cmd">sudo nmap</span> <span class="syntax-flag">-sV --script vuln</span> <span class="syntax-target">192.168.141.134</span></code></pre>
+                                </div>
+                                <ul class="detail-list">
+                                    <li><strong>-sS:</strong> escaneo SYN (sigiloso) para detectar puertos abiertos.</li>
+                                    <li><strong>-sV:</strong> identifica la versión de los servicios encontrados.</li>
+                                    <li><strong>-O:</strong> intenta determinar el sistema operativo del objetivo.</li>
+                                    <li><strong>-oX</strong> y <strong>--stylesheet:</strong> exportan el resultado a XML y lo presentan como reporte HTML navegable.</li>
+                                    <li><strong>--script vuln:</strong> ejecuta scripts NSE que cruzan los servicios detectados contra vulnerabilidades conocidas.</li>
+                                </ul>
+                                <p class="lab-note"><i class="fas fa-save"></i> Guarde los archivos <code>puertos.xml</code> y <code>resultados.xml</code>, junto con la salida del escaneo de vulnerabilidades, como evidencia del laboratorio.</p>
+                            </li>
+                            <li>
+                                <strong>Paso 4 – Ejecutar Nikto</strong>
+                                <div class="code-block code-block--syntax">
+                                    <div class="code-block__header"><span>Escaneo web</span><button class="copy-btn" data-copy="nikto -h http://<IP_Metasploitable>"><i class="fas fa-copy"></i></button></div>
+                                    <pre><code><span class="syntax-cmd">nikto</span> <span class="syntax-flag">-h</span> <span class="syntax-target">http://&lt;IP_Metasploitable&gt;</span></code></pre>
+                                </div>
+                                <p class="lab-note"><i class="fas fa-save"></i> Guarde los resultados obtenidos como evidencia.</p>
+                            </li>
+                            <li>
+                                <strong>Paso 5 – Ejecutar OpenVAS o Nessus</strong>
+                                <p>Realice un escaneo completo de vulnerabilidades contra la IP de Metasploitable.</p>
+                            </li>
+                            <li>
+                                <strong>Paso 6 – Analizar resultados</strong>
+                                <p>Identifique y documente:</p>
+                                <ul class="analysis-checklist">
+                                    <li><i class="fas fa-circle severity-dot severity-dot--critical"></i> Vulnerabilidades críticas</li>
+                                    <li><i class="fas fa-circle severity-dot severity-dot--high"></i> Vulnerabilidades altas</li>
+                                    <li><i class="fas fa-circle severity-dot severity-dot--medium"></i> Vulnerabilidades medias</li>
+                                    <li><i class="fas fa-circle severity-dot severity-dot--blue"></i> Servicios afectados</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- ==================== PARTE IV: MATRIZ DE VULNERABILIDADES ==================== -->
+                <div class="lab-part">
+                    <div class="lab-part__header">
+                        <span class="lab-part__number">IV</span>
+                        <h3>Matriz de Vulnerabilidades</h3>
+                    </div>
+
+                    <div class="card activity-card">
+                        <p>Complete la siguiente tabla con los resultados obtenidos durante el laboratorio:</p>
+                        <div class="table-responsive">
+                            <table class="worksheet-table">
+                                <thead>
+                                    <tr>
+                                        <th>Vulnerabilidad</th>
+                                        <th>CVE</th>
+                                        <th>CVSS</th>
+                                        <th>Activo Afectado</th>
+                                        <th>Riesgo</th>
+                                        <th>Recomendación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" placeholder="Nombre"></td>
+                                        <td><input type="text" placeholder="CVE-XXXX-XXXX"></td>
+                                        <td><input type="number" min="0" max="10" step="0.1" placeholder="0.0"></td>
+                                        <td><input type="text" placeholder="Activo"></td>
+                                        <td><select><option value="">—</option><option>Crítico</option><option>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+                                        <td><input type="text" placeholder="Mitigación"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" placeholder="Nombre"></td>
+                                        <td><input type="text" placeholder="CVE-XXXX-XXXX"></td>
+                                        <td><input type="number" min="0" max="10" step="0.1" placeholder="0.0"></td>
+                                        <td><input type="text" placeholder="Activo"></td>
+                                        <td><select><option value="">—</option><option>Crítico</option><option>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+                                        <td><input type="text" placeholder="Mitigación"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" placeholder="Nombre"></td>
+                                        <td><input type="text" placeholder="CVE-XXXX-XXXX"></td>
+                                        <td><input type="number" min="0" max="10" step="0.1" placeholder="0.0"></td>
+                                        <td><input type="text" placeholder="Activo"></td>
+                                        <td><select><option value="">—</option><option>Crítico</option><option>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+                                        <td><input type="text" placeholder="Mitigación"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" placeholder="Nombre"></td>
+                                        <td><input type="text" placeholder="CVE-XXXX-XXXX"></td>
+                                        <td><input type="number" min="0" max="10" step="0.1" placeholder="0.0"></td>
+                                        <td><input type="text" placeholder="Activo"></td>
+                                        <td><select><option value="">—</option><option>Crítico</option><option>Alto</option><option>Medio</option><option>Bajo</option></select></td>
+                                        <td><input type="text" placeholder="Mitigación"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="lab-cta">
+                            <p>También puede utilizar la <strong>Matriz interactiva</strong> de la plataforma para exportar sus resultados a CSV.</p>
+                            <button class="btn btn--primary" data-goto="matriz"><i class="fas fa-table"></i> Ir a Matriz interactiva</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ==================== PARTE V: ANÁLISIS PROFESIONAL ==================== -->
+                <div class="lab-part">
+                    <div class="lab-part__header">
+                        <span class="lab-part__number">V</span>
+                        <h3>Análisis Profesional</h3>
+                    </div>
+
+                    <div class="card">
+                        <h4><i class="fas fa-user-shield"></i> Escenario profesional</h4>
+                        <p>Imagine que usted es el analista de seguridad responsable del servidor. El presupuesto de la empresa solamente permite corregir <strong>tres vulnerabilidades</strong> esta semana.</p>
+                    </div>
+
+                    <div class="card activity-card">
+                        <div class="activity-card__header">
+                            <span class="activity-badge">Actividad 5</span>
+                            <h4>Priorización de vulnerabilidades</h4>
+                        </div>
+                        <p>Seleccione las tres vulnerabilidades más importantes y justifique su decisión:</p>
+                        <div class="table-responsive">
+                            <table class="worksheet-table">
+                                <thead>
+                                    <tr>
+                                        <th>Vulnerabilidad</th>
+                                        <th>Prioridad</th>
+                                        <th>Justificación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" placeholder="Vulnerabilidad seleccionada"></td>
+                                        <td><input type="number" min="1" max="3" placeholder="1-3"></td>
+                                        <td><textarea rows="2" placeholder="Justifique técnicamente su priorización..."></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" placeholder="Vulnerabilidad seleccionada"></td>
+                                        <td><input type="number" min="1" max="3" placeholder="1-3"></td>
+                                        <td><textarea rows="2" placeholder="Justifique técnicamente su priorización..."></textarea></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" placeholder="Vulnerabilidad seleccionada"></td>
+                                        <td><input type="number" min="1" max="3" placeholder="1-3"></td>
+                                        <td><textarea rows="2" placeholder="Justifique técnicamente su priorización..."></textarea></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Entregables y criterios de evaluación -->
+                <div class="dashboard-grid dashboard-grid--2">
+                    <div class="card">
+                        <h3><i class="fas fa-file-export"></i> Entregables</h3>
+                        <ul class="check-list">
+                            <li><i class="fas fa-file-alt"></i> Investigación de CVE y CVSS</li>
+                            <li><i class="fas fa-terminal"></i> Evidencias de ejecución de Nikto</li>
+                            <li><i class="fas fa-radar"></i> Evidencias del escaneo con OpenVAS o Nessus</li>
+                            <li><i class="fas fa-table"></i> Matriz de vulnerabilidades completa</li>
+                            <li><i class="fas fa-chart-pie"></i> Documento de análisis y priorización de riesgos</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-clipboard-list"></i> Criterios de Evaluación</h3>
+                        <div class="table-responsive">
+                            <table class="criteria-table">
+                                <thead>
+                                    <tr>
+                                        <th>Criterio</th>
+                                        <th>Ponderación</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Investigación de CVE</td>
+                                        <td><span class="criteria-weight">20%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Uso correcto de CVSS</td>
+                                        <td><span class="criteria-weight">15%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ejecución del laboratorio</td>
+                                        <td><span class="criteria-weight">25%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Matriz de vulnerabilidades</td>
+                                        <td><span class="criteria-weight">25%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Priorización y análisis</td>
+                                        <td><span class="criteria-weight">15%</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 10: MATRIZ DE VULNERABILIDADES ==================== -->
+            <section class="tab-panel" id="matriz" data-tab="matriz">
+                <header class="section-header">
+                    <h2><i class="fas fa-table"></i> Matriz de Vulnerabilidades</h2>
+                    <p>Documenta y gestiona los hallazgos del análisis</p>
+                </header>
+
+                <div class="matrix-toolbar">
+                    <button class="btn btn--primary" id="addRowBtn"><i class="fas fa-plus"></i> Agregar fila</button>
+                    <button class="btn btn--danger" id="removeRowBtn"><i class="fas fa-trash"></i> Eliminar fila</button>
+                    <button class="btn btn--success" id="exportCsvBtn"><i class="fas fa-file-csv"></i> Exportar CSV</button>
+                </div>
+
+                <div class="table-responsive matrix-wrapper">
+                    <table class="matrix-table" id="vulnMatrix">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" id="selectAllRows" aria-label="Seleccionar todas"></th>
+                                <th>Vulnerabilidad</th>
+                                <th>CVE</th>
+                                <th>CVSS</th>
+                                <th>Activo afectado</th>
+                                <th>Nivel de riesgo</th>
+                                <th>Recomendación</th>
+                            </tr>
+                        </thead>
+                        <tbody id="matrixBody">
+                            <!-- Filas generadas dinámicamente por JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ==================== PESTAÑA 11: EVALUACIÓN ==================== -->
+            <section class="tab-panel" id="evaluacion" data-tab="evaluacion">
+                <header class="section-header">
+                    <h2><i class="fas fa-clipboard-check"></i> Evaluación</h2>
+                    <p>Cuestionario de 10 preguntas – Análisis de Vulnerabilidades</p>
+                </header>
+
+                <div class="quiz-container" id="quizContainer">
+                    <!-- Preguntas generadas dinámicamente por JavaScript -->
+                </div>
+
+                <div class="quiz-actions">
+                    <button class="btn btn--primary" id="submitQuizBtn"><i class="fas fa-paper-plane"></i> Enviar respuestas</button>
+                    <button class="btn btn--outline" id="resetQuizBtn"><i class="fas fa-redo"></i> Reiniciar</button>
+                </div>
+
+                <div class="quiz-results" id="quizResults" hidden>
+                    <div class="quiz-results__score">
+                        <div class="score-circle" id="scoreCircle">
+                            <span id="scorePercent">0%</span>
+                        </div>
+                        <div class="score-details">
+                            <h3>Resultado final</h3>
+                            <p>Puntuación: <strong id="scorePoints">0/10</strong></p>
+                            <p id="scoreFeedback">Completa el cuestionario para ver tu resultado.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Botón flotante: Volver al inicio -->
+    <button class="back-to-top" id="backToTop" aria-label="Volver al inicio" title="Volver al inicio">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Overlay para sidebar en móvil -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Script principal -->
+    <script src="script.js"></script>
+</body>
+</html>
